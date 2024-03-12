@@ -1,0 +1,23 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: HelmDeploy@0
+  displayName: 'package the helm chart'
+  inputs:
+    command: 'package'
+    chartPath: 'quotes'
+
+- task: HelmDeploy@0
+  displayName: 'push the helm chart to the registry'
+  inputs:
+    command: 'push'
+    chartPath: 'quotes'
